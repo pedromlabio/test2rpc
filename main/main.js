@@ -3,12 +3,26 @@ const rpc = new RPC.Client({
     transport: "ipc"
 })
 
-rpc.on("ready", () => {
+
+async function setActivity() {
+    //this is where the main code will run
     rpc.setActivity({
-
-
+        
+        
 
     })
+    
+}
+
+
+
+rpc.on("ready", () => {
+    setActivity();
+
+
+    setInterval(() => {
+        setActivity();
+    }, 15e3);
 
 
     console.log("active");
