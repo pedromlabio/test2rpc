@@ -5,12 +5,16 @@ const rpc = new RPC.Client({
 
 rpc.on("ready", () => {
     rpc.setActivity({
-        
+
 
 
     })
 
 
+    console.log("active");
 
+})
 
+rpc.login({
+    clientId: "1016530131516391455"
 })
