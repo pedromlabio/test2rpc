@@ -3,21 +3,12 @@ const RPC = require('discord-rpc');
 const rpc = new RPC.Client({
     transport: "ipc"
 })
+const start = new Date().getTime();
 
 
-async function setActivity() {
+async function setActivity(data) {
     //this is where the main code will run
-    rpc.setActivity({
-        
-
-        if(world = true){
-            details: "World: 1.1",
-            state: "Cell: N",
-            largeImageKey: "sam" 
-        }
-        
-
-    })
+    rpc.setActivity(data)
     
 }
 
@@ -28,8 +19,26 @@ rpc.on("ready", () => {
 
 
     setInterval(() => {
-        setActivity();
-    }, 15e3);
+        let data;
+        if(world == true){
+            data = {
+                details: "World: 1.1",
+                state: "Cell: C",
+                largeImageKey: "sam",
+                startTimestamp: start
+            }
+        }else{
+            data = {
+                details: "In Menu",
+                //state: "Cell: C",
+                largeImageKey: "sam",
+                startTimestamp: start
+            }
+        }
+
+
+        setActivity(data);
+    }, 5e3);
 
 
     console.log("active");
