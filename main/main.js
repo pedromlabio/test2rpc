@@ -13,10 +13,7 @@ async function getData(){
           process.env.ROBLOX_USER_ID
         ]
       })
-      .then(function (response){
-        var userPresence = response
-        //console.log(userPresence)
-      })
+    
 
     console.log(response.data)
     let data = {}
