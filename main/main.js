@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 var world = true;
 const RPC = require('discord-rpc');
 const rpc = new RPC.Client({
@@ -46,5 +48,5 @@ rpc.on("ready", () => {
 })
 
 rpc.login({
-    clientId: "1016530131516391455"
+    clientId: process.env.DISCORD_CLIENT_ID,
 })
