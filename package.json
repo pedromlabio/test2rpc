@@ -1,7 +1,7 @@
 {
   "name": "test2rpc",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "main/main.js",
   "repository": "https://github.com/JVOPINHO/test2rpc.git",
   "author": "jvopinho <jvopinho.dev@gmail.com>",
   "license": "MIT",

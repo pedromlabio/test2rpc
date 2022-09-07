@@ -19,8 +19,12 @@ async function getData(){
         "userIds": [
           process.env.ROBLOX_USER_ID
         ]
+      }, {
+        headers: {
+            cookie: `.ROBLOSECURITY=${process.env.ROBLOX_USER_TOKEN}`
+        }
       })
-    
+      
     let userPresence = response.data.userPresences[0]
     //console.log(userPresence.userPresenceType)
     
