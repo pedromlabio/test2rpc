@@ -8,6 +8,12 @@ const rpc = new RPC.Client({
 const start = new Date().getTime();
 var response;
 
+async function processPresence(robloxPresence){
+    let data;
+    console.log(robloxPresence)
+
+}
+
 async function getData(){
     response = await axios.post('https://presence.roblox.com/v1/presence/users', {
         "userIds": [
@@ -16,7 +22,7 @@ async function getData(){
       })
     
     let userPresence = response.data.userPresences[0]
-    console.log(userPresence.userPresenceType)
+    //console.log(userPresence.userPresenceType)
     
     let data = {}
     let presenceType = Number(userPresence.userPresenceType)
@@ -25,7 +31,7 @@ async function getData(){
 
         case 0:
             //user is offiline
-            console.log("caso 0")
+            //console.log("caso 0")
             data = {
                 details: "Not in game",
                 state: "Offline",
@@ -34,17 +40,17 @@ async function getData(){
             break;
         case 1:
             //user is on website
-            console.log("caso 1")
+            //console.log("caso 1")
             data = {
                 details: "Not in game",
                 state: "Website",
-                largeImageKey: "sam"
+                largeImageKey: "https://static.wikia.nocookie.net/projoot-testing/images/e/e6/Site-logo.png/revision/latest?cb=20210603012513",
             }
             break;
         case 2:
             //user is in game proceed with game checking
-            console.log("caso 2")
-
+            data = await processPresence(userPresence)
+            
 
             break;
     }
@@ -58,7 +64,7 @@ async function getData(){
 
 async function updatePresence(rpcData) {
     //this is where the main code will run
-    console.log(rpcData)
+    //console.log(rpcData)
     rpc.setActivity(rpcData)
     
 }
@@ -67,7 +73,7 @@ async function updatePresence(rpcData) {
 
 rpc.on("ready", async () => {
     let data = await getData();
-    console.log(data)
+    //console.log(data)
     updatePresence(data);
 
 
