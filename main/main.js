@@ -66,7 +66,7 @@ rpc.on("ready", async () => {
     updatePresence(data);
 
 
-    setInterval(() => {
+    setInterval(async () => {
         data = getData();
         updatePresence(data);
     }, 5e3);
