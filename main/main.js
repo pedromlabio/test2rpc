@@ -19,33 +19,38 @@ async function getData(){
     console.log(userPresence.userPresenceType)
     
     let data = {}
-    let presenceType = userPresence.userPresenceType
+    let presenceType = Number(userPresence.userPresenceType)
 
     switch(presenceType){
 
         case 0:
             //user is offiline
+            console.log("caso 0")
             data = {
                 details: "Not in game",
-                state: "Offline"
-
+                state: "Offline",
+                largeImageKey: "sam"
             }
+            break;
         case 1:
             //user is on website
+            console.log("caso 1")
             data = {
                 details: "Not in game",
-                state: "Website"
+                state: "Website",
+                largeImageKey: "sam"
             }
-
+            break;
         case 2:
             //user is in game proceed with game checking
+            console.log("caso 2")
 
 
-
+            break;
     }
 
 
-    console.log(data)
+    //console.log(data)
     return data;
 }
 
@@ -67,7 +72,7 @@ rpc.on("ready", async () => {
 
 
     setInterval(async () => {
-        data = getData();
+        data = await getData();
         updatePresence(data);
     }, 5e3);
 
