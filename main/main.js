@@ -51,23 +51,24 @@ async function getData(){
 
 
 
-async function setActivity(data) {
+async function updatePresence(rpcData) {
     //this is where the main code will run
-    //console.log(data)
-    rpc.setActivity(data)
+    console.log(rpcData)
+    rpc.setActivity(rpcData)
     
 }
 
 
 
-rpc.on("ready", () => {
-    let data = getData();
-    setActivity();
+rpc.on("ready", async () => {
+    let data = await getData();
+    console.log(data)
+    updatePresence(data);
 
 
     setInterval(() => {
-        let data = getData();
-        setActivity(data);
+        data = getData();
+        updatePresence(data);
     }, 5e3);
 
 
