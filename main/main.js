@@ -1,17 +1,55 @@
+//https://games.roblox.com/v1/games/multiget-place-details?placeIds=
 require('dotenv').config();
 const { default: axios } = require('axios');
-var world = true;
 const RPC = require('discord-rpc');
 const rpc = new RPC.Client({
     transport: "ipc"
 })
-const start = new Date().getTime();
+var start;
+var inGame = false;
 var response;
 
 async function processPresence(robloxPresence){
     let data;
-    console.log(robloxPresence)
+    let universeId = robloxPresence.universeId
+    //console.log(robloxPresence)
+    if(universeId != 1250803741){
+        //user is in different game
+        data = {
+            details: "In different game",
+            state: "In Game",
+            largeImageKey: "sam"
+        }
+    }else{
+        //user is in test2 proceed with checkings
+        //checking is the user is on the menu or inside a world
+        let placeId = robloxPresence.placeId
+        if(placeId == 3540051865){
+            //user is in projoot menu
+            if(!inGame){start = new Date().getDate(); inGame = true}
+            data = {
+                details: "Playing Test2",
+                state: "In Game",
+                largeImageKey: "sam",
+                startTimestamp: start
+            }
+        }else{
+            //user is inside of a world
+            CellData = await getPlaceData(placeId);
+        }
 
+
+    }
+
+
+    return data
+}
+
+
+async function getPlaceData(id){
+    response = await axios.get(`https://games.roblox.com/v1/games/multiget-place-details?placeIds=${id}`);
+    console.log(response);
+    return response;
 }
 
 async function getData(){
@@ -26,7 +64,7 @@ async function getData(){
       })
       
     let userPresence = response.data.userPresences[0]
-    //console.log(userPresence.userPresenceType)
+    console.log(userPresence.userPresenceType)
     
     let data = {}
     let presenceType = Number(userPresence.userPresenceType)
