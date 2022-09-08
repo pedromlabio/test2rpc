@@ -35,7 +35,13 @@ async function processPresence(robloxPresence){
             }
         }else{
             //user is inside of a world
-            let placeData = getPlaceData(placeId);
+            let placeData = await getPlaceData(placeId);
+            let dataArray = placeData.split(":");
+            let world = dataArray[0];
+            let cellCode = dataArray[1];
+            console.log(world)
+            console.log(cellCode)
+
         }
 
 
@@ -57,9 +63,9 @@ async function getPlaceData(id){
         }
 
         );
-        console.log(response.data);
+        //console.log(response.data);
 
-        return response.data; 
+        return response.data[0].name; 
     } catch(error){
         console.error(error.response.data);
     }
@@ -79,8 +85,6 @@ async function getData(){
       })
       
     let userPresence = response.data.userPresences[0]
-    //console.log(userPresence)
-    // Eu to é chorando de rir aqui kkkkkkkkkkkk
     
     let data = {}
     let presenceType = Number(userPresence.userPresenceType)
