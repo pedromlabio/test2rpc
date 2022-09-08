@@ -29,7 +29,7 @@ async function processPresence(robloxPresence){
             if(!inGame){start = new Date().getDate(); inGame = true}
             data = {
                 details: "Playing Test2",
-                state: "In Game",
+                state: "In Menu",
                 largeImageKey: "sam",
                 startTimestamp: start
             }
@@ -47,7 +47,7 @@ async function processPresence(robloxPresence){
 
 
 async function getPlaceData(id){
-    // Testa ae
+
     try{
         const response = await axios.get(`https://games.roblox.com/v1/games/multiget-place-details?placeIds=${id}`,
         {
@@ -59,12 +59,11 @@ async function getPlaceData(id){
         );
         console.log(response.data);
 
-        return response.data; // Tava fora do scopo
+        return response.data; 
     } catch(error){
         console.error(error.response.data);
     }
-    // http 401 = Unauthorized, tem algum header de autorização que a gente não ta mandando
-    // Isso
+
     
 }
 
