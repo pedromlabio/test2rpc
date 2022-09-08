@@ -2,12 +2,12 @@
 require('dotenv').config();
 const { default: axios } = require('axios');
 const RPC = require('discord-rpc');
+
 const rpc = new RPC.Client({
     transport: "ipc"
 })
 var start;
 var inGame = false;
-var response;
 
 async function processPresence(robloxPresence){
     let data;
@@ -35,7 +35,7 @@ async function processPresence(robloxPresence){
             }
         }else{
             //user is inside of a world
-            CellData = await getPlaceData(placeId);
+            let placeData = getPlaceData(placeId);
         }
 
 
@@ -47,13 +47,29 @@ async function processPresence(robloxPresence){
 
 
 async function getPlaceData(id){
-    response = await axios.get(`https://games.roblox.com/v1/games/multiget-place-details?placeIds=${id}`);
-    console.log(response);
-    return response;
+    // Testa ae
+    try{
+        const response = await axios.get(`https://games.roblox.com/v1/games/multiget-place-details?placeIds=${id}`,
+        {
+            headers: {
+                cookie: `.ROBLOSECURITY=${process.env.ROBLOX_USER_TOKEN}`
+            }
+        }
+
+        );
+        console.log(response.data);
+
+        return response.data; // Tava fora do scopo
+    } catch(error){
+        console.error(error.response.data);
+    }
+    // http 401 = Unauthorized, tem algum header de autorização que a gente não ta mandando
+    // Isso
+    
 }
 
 async function getData(){
-    response = await axios.post('https://presence.roblox.com/v1/presence/users', {
+    const response = await axios.post('https://presence.roblox.com/v1/presence/users', {
         "userIds": [
           process.env.ROBLOX_USER_ID
         ]
@@ -64,7 +80,8 @@ async function getData(){
       })
       
     let userPresence = response.data.userPresences[0]
-    console.log(userPresence.userPresenceType)
+    //console.log(userPresence)
+    // Eu to é chorando de rir aqui kkkkkkkkkkkk
     
     let data = {}
     let presenceType = Number(userPresence.userPresenceType)
