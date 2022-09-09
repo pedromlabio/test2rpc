@@ -14,6 +14,7 @@ async function processPresence(robloxPresence){
     let universeId = robloxPresence.universeId
     //console.log(robloxPresence)
     if(universeId != 1250803741){
+        if(inGame){inGame = false}
         //user is in different game
         data = {
             details: "In different game",
@@ -34,13 +35,78 @@ async function processPresence(robloxPresence){
                 startTimestamp: start
             }
         }else{
+            if(!inGame){start = new Date().getDate(); inGame = true}
             //user is inside of a world
             let placeData = await getPlaceData(placeId);
             let dataArray = placeData.split(":");
             let world = dataArray[0];
-            let cellCode = dataArray[1];
-            console.log(world)
-            console.log(cellCode)
+            let cellCode = dataArray[1].split(",");
+            console.log(world);
+            console.log(cellCode);
+            
+            //begin cell checking
+            if(cellCode[0] == 3 && cellCode[1] == 3){
+                //user is in center
+                data = {
+                    details: `World: ${world}`,
+                    state: "Cell: C",
+                    largeImageKey: "sam",
+                    startTimestamp: start
+                }
+            }else{
+                //user is in a different cell, begin to process info
+                let x = Number(cellCode[0]);
+                let y = Number(cellCode[1]);
+                let cellString = "";
+                switch(y){
+                    case 1:
+                        //NN
+                        cellString = cellString.concat("NN");
+                        break;
+                    case 2:
+                        //N
+                        cellString = cellString.concat("N");
+                        break;
+                    case 3:
+                        //null
+                        break;
+                    case 4:
+                        //S
+                        cellString = cellString.concat("S");
+                        break;
+                    case 5:
+                        //SS
+                        cellString = cellString.concat("SS");
+                        break;
+                }
+                switch(x){
+                    case 1:
+                        //WW
+                        cellString = cellString.concat("WW");
+                        break;
+                    case 2:
+                        //W
+                        cellString = cellString.concat("W");
+                        break;
+                    case 3:
+                        //null
+                        break;
+                    case 4:
+                        cellString = cellString.concat("E");
+                        break;
+                    case 5:
+                        cellString = cellString.concat("EE");
+                        break;
+                }
+
+                data = {
+                    details: `World: ${world}`,
+                    state: `Cell: ${cellString}`,
+                    largeImageKey: "sam",
+                    startTimestamp: start
+                }
+
+            }
 
         }
 
@@ -92,6 +158,7 @@ async function getData(){
     switch(presenceType){
 
         case 0:
+            if(inGame){inGame = false}
             //user is offiline
             //console.log("caso 0")
             data = {
@@ -101,6 +168,7 @@ async function getData(){
             }
             break;
         case 1:
+            if(inGame){inGame = false}
             //user is on website
             //console.log("caso 1")
             data = {
