@@ -102,8 +102,9 @@ async function processPresence(robloxPresence){
                 let worldCode = ("").concat(worldArray[0], worldArray[1]);
                 let imageCode = ("").concat(cellString, worldCode);
                 let imageLink = images[imageCode];
+                //let imageLink2 = imageCode.toLowerCase();
                 //console.log(imageCode)
-                //console.log(imageLink)
+                console.log(imageLink)
                 data = {
                     details: `World: ${world}`,
                     state: `Cell: ${cellString}`,
