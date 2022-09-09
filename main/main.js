@@ -98,11 +98,12 @@ async function processPresence(robloxPresence){
                         cellString = cellString.concat("EE");
                         break;
                 }
-
+                let worldArray = world.split(".");
+                let worldCode = ("").concat(worldArray[0][1]);
                 data = {
                     details: `World: ${world}`,
                     state: `Cell: ${cellString}`,
-                    largeImageKey: "sam",
+                    largeImageKey: `./images/${cellString}`,
                     startTimestamp: start
                 }
 
