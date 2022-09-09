@@ -2,7 +2,7 @@
 require('dotenv').config();
 const { default: axios } = require('axios');
 const RPC = require('discord-rpc');
-
+const images = require("./images/images.json")
 const rpc = new RPC.Client({
     transport: "ipc"
 })
@@ -99,11 +99,15 @@ async function processPresence(robloxPresence){
                         break;
                 }
                 let worldArray = world.split(".");
-                let worldCode = ("").concat(worldArray[0][1]);
+                let worldCode = ("").concat(worldArray[0], worldArray[1]);
+                let imageCode = ("").concat(cellString, worldCode);
+                let imageLink = images[imageCode];
+                //console.log(imageCode)
+                //console.log(imageLink)
                 data = {
                     details: `World: ${world}`,
                     state: `Cell: ${cellString}`,
-                    largeImageKey: `./images/${cellString}`,
+                    largeImageKey: imageLink,
                     startTimestamp: start
                 }
 
