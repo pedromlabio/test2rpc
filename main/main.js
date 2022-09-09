@@ -50,7 +50,7 @@ async function processPresence(robloxPresence){
                 data = {
                     details: `World: ${world}`,
                     state: "Cell: C",
-                    largeImageKey: "sam",
+                    largeImageKey: images.C11,
                     startTimestamp: start
                 }
             }else{
