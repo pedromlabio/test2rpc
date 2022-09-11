@@ -31,7 +31,7 @@ async function processPresence(robloxPresence){
             data = {
                 details: "Playing Test2",
                 state: "In Menu",
-                largeImageKey: "sam",
+                largeImageKey: images.MENU,
                 startTimestamp: start
             }
         }else{
