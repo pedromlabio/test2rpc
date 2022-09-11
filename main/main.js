@@ -2,7 +2,7 @@
 require('dotenv').config();
 const { default: axios } = require('axios');
 const RPC = require('discord-rpc');
-const images = require("./images/images.json")
+const images = "https://test2rpcimages.vercel.app/";  //require("./images/images.json")
 const rpc = new RPC.Client({
     transport: "ipc"
 })
@@ -28,10 +28,12 @@ async function processPresence(robloxPresence){
         if(placeId == 3540051865){
             //user is in projoot menu
             if(!inGame){start = new Date().getDate(); inGame = true}
+            let imageLink = `${images}/misc/MENU.png`;
+            console.log(imageLink)
             data = {
                 details: "Playing Test2",
                 state: "In Menu",
-                largeImageKey: images.MENU,
+                largeImageKey: imageLink,
                 startTimestamp: start
             }
         }else{
@@ -41,6 +43,7 @@ async function processPresence(robloxPresence){
             let dataArray = placeData.split(":");
             let world = dataArray[0];
             let cellCode = dataArray[1].split(",");
+            let worldCode = ("").concat(worldArray[0], worldArray[1]);
             console.log(world);
             console.log(cellCode);
             
@@ -50,7 +53,7 @@ async function processPresence(robloxPresence){
                 data = {
                     details: `World: ${world}`,
                     state: "Cell: C",
-                    largeImageKey: images.C11,
+                    largeImageKey: `${images}/worlds/world${worldCode}/C.png`,
                     startTimestamp: start
                 }
             }else{
@@ -100,15 +103,15 @@ async function processPresence(robloxPresence){
                 }
                 let worldArray = world.split(".");
                 let worldCode = ("").concat(worldArray[0], worldArray[1]);
-                let imageCode = ("").concat(cellString, worldCode);
-                let imageLink = images[imageCode];
+                //let imageCode = ("").concat(cellString, worldCode);
+                //let imageLink = images[imageCode];
                 //let imageLink2 = imageCode.toLowerCase();
                 //console.log(imageCode)
                 console.log(imageLink)
                 data = {
                     details: `World: ${world}`,
                     state: `Cell: ${cellString}`,
-                    largeImageKey: imageLink,
+                    largeImageKey: `${images}/worlds/world${worldCode}/${cellCode}.png`,
                     startTimestamp: start
                 }
 
