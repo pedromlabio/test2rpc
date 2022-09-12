@@ -2,7 +2,7 @@
 require('dotenv').config();
 const { default: axios } = require('axios');
 const RPC = require('discord-rpc');
-const images = "https://test2rpcimages.vercel.app/";  //require("./images/images.json")
+const images = "https://test2rpcimages.vercel.app";  //require("./images/images.json")
 const rpc = new RPC.Client({
     transport: "ipc"
 })
@@ -27,7 +27,8 @@ async function processPresence(robloxPresence){
         let placeId = robloxPresence.placeId
         if(placeId == 3540051865){
             //user is in projoot menu
-            if(!inGame){start = new Date().getDate(); inGame = true}
+            if(!inGame){start = new Date().getTime(); inGame = true}
+            
             let imageLink = `${images}/misc/MENU.png`;
             console.log(imageLink)
             data = {
@@ -37,12 +38,13 @@ async function processPresence(robloxPresence){
                 startTimestamp: start
             }
         }else{
-            if(!inGame){start = new Date().getDate(); inGame = true}
+            if(!inGame){start = new Date().getTime(); inGame = true}
             //user is inside of a world
             let placeData = await getPlaceData(placeId);
             let dataArray = placeData.split(":");
             let world = dataArray[0];
             let cellCode = dataArray[1].split(",");
+            let worldArray = world.split(".");
             let worldCode = ("").concat(worldArray[0], worldArray[1]);
             console.log(world);
             console.log(cellCode);
@@ -50,10 +52,12 @@ async function processPresence(robloxPresence){
             //begin cell checking
             if(cellCode[0] == 3 && cellCode[1] == 3){
                 //user is in center
+                let imageLink2 = `${images}/worlds/world${worldCode}/C.png`;
+                console.log(imageLink2)
                 data = {
                     details: `World: ${world}`,
                     state: "Cell: C",
-                    largeImageKey: `${images}/worlds/world${worldCode}/C.png`,
+                    largeImageKey: imageLink2,
                     startTimestamp: start
                 }
             }else{
@@ -105,13 +109,13 @@ async function processPresence(robloxPresence){
                 let worldCode = ("").concat(worldArray[0], worldArray[1]);
                 //let imageCode = ("").concat(cellString, worldCode);
                 //let imageLink = images[imageCode];
-                //let imageLink2 = imageCode.toLowerCase();
+                let imageLink2 = `${images}/worlds/world${worldCode}/${cellString}.png`;
                 //console.log(imageCode)
-                console.log(imageLink)
+                console.log(imageLink2);
                 data = {
                     details: `World: ${world}`,
                     state: `Cell: ${cellString}`,
-                    largeImageKey: `${images}/worlds/world${worldCode}/${cellCode}.png`,
+                    largeImageKey: imageLink2,
                     startTimestamp: start
                 }
 
