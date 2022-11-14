@@ -16,6 +16,7 @@ async function processPresence(robloxPresence){
     if(universeId != 1250803741){
         if(inGame){inGame = false}
         //user is in different game
+        console.log(universeId)
         data = {
             details: "In different game",
             state: "In Game",
